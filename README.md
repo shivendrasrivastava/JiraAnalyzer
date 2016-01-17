@@ -1,0 +1,2 @@
+# JiraAnalyzer
+Analyze JIRA issues

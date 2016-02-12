@@ -1,11 +1,11 @@
 #!bin/python
 __author__ = 'Shiven'
 
-import jira_main as jm
+import retrieve.jira_main as get
 
 def main():
 	print "This is it"
-	jm.start()
+	get.start()
 
 main()
 

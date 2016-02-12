@@ -1,10 +1,10 @@
 # JiraAnalyzer
 
-## Requirement :-
+### Requirement :-
   * Retreive project related information from JIRA
   * Analyze the issues based on KPIs 
 
-## Usage :-
+### Usage :-
   * Ensure python, pip are installed on the system.
   * Clone this project
   * Ensure the file run.py is executable using the command - chmod a+x run.py

@@ -7,7 +7,7 @@
 ### Usage :-
   * Ensure python, pip are installed on the system.
   * Clone this project
-  * Ensure the file run.py is executable using the command - chmod a+x run.py
+  * Run the init.py script using the command "python init.py". This script will set required permission for the run.py file.
   * Run the file run.py with the option -h to get the usage params for this file.
   * Fetching issues :-
     * E.g. ./run.py -u _'url for the server'_<br>

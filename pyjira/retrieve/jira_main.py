@@ -15,7 +15,7 @@ def start():
 	if args.url and args.id and args.pwd and args.project:
 	    jira = jiracon.connect(args.url, args.id, args.pwd)
 	    if jira is not None:
-	    	jp.parse(args.project, jira, args.dir)
+	    	jp.parse(args.url, args.project, jira, args.dir, args.id, args.pwd)
 	    else:
 	    	print "Error occurred while connecting to jira. Please check the connection parameters"
 	else:

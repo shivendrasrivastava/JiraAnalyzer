@@ -1,8 +1,9 @@
 __author__ = 'Shiven'
 
 import argparse
-import jira_connect as jiracon
-import jira_parse as jp
+#import jira_parse as jp
+from jira_connect import Connect
+from parse import Parse
 
 def start():
 	parser = argparse.ArgumentParser()
@@ -13,10 +14,26 @@ def start():
 	parser.add_argument("-d", "--dir", help="Enter the directory where the issues need to be stored")
 	args = parser.parse_args()
 	if args.url and args.id and args.pwd and args.project:
-	    jira = jiracon.connect(args.url, args.id, args.pwd)
-	    if jira is not None:
-	    	jp.parse(args.url, args.project, jira, args.dir, args.id, args.pwd)
-	    else:
-	    	print "Error occurred while connecting to jira. Please check the connection parameters"
+		conn = set_conn_info(args.url, args.id, args.pwd)
+		jira = conn.connect()
+		print "Connected"
+		if jira is not None:
+			parse = set_parser_info(jira, args.project, args.dir)
+			parse.parse()
+		else:
+			print "Error occurred while connecting to jira. Please check the connection parameters"
 	else:
-	    parser.print_help()
+		parser.print_help()
+
+#Setting connection information in the Parse class
+def set_parser_info(jira, prj, dirname):
+	parse = Parse(prj, jira, dirname)
+	return parse
+
+#Setting connection info in the Connect class
+def set_conn_info(url, user, pwd):
+	Connect.url = url
+	Connect.user = user
+	Connect.pwd = pwd
+	conn = Connect()
+	return conn

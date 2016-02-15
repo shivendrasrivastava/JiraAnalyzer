@@ -20,6 +20,7 @@ class Parse(Connect):
 		total_no_of_issues = issues_info['total']
 		self.retrieve(total_no_of_issues)
 
+	#Forms the query string for the parser.
 	def get_query_string(self):
 		query_string = 'project='+self.prj
 		return query_string
@@ -68,6 +69,7 @@ class Parse(Connect):
 		target.write(json.dumps(json_data, indent=4))
 		target.close()
 
+	#Gets issue details from 
 	def get_issue_detail(self, key):
 		request_data = requests.get(self.get_rest_api_url(key), auth=(Connect.user, Connect.pwd))
 		json_data = json.loads(request_data.text)

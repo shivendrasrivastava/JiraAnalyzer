@@ -43,7 +43,10 @@ class Parse(Connect):
 						json_data = self.get_issue_detail(key)
 						print "Writing file for issue ", key
 						self.writeToFile(json_data, key)
+				else:
+					print "No issues to be parsed"
 		else:
+			print "Parsing issues... total issues are less than 1000"
 			issues = self.search(total_no_of_issues, 0)
 			if issues is not None:
 				for key in issues:

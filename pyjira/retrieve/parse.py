@@ -1,15 +1,18 @@
 #class used for parsing data from jira
+__author__ = "Shiven"
 import json
 import requests
 from connect import Connect
+from file_manager import File
 
-class Parse(Connect):
+class Parse(object):
 
 	#Constructor to set initial values
 	def __init__(self, prj_name, jira, dirname):
 		self.prj = prj_name
 		self.jira = jira
 		self.dir= dirname
+		self.file = File()
 
 	#Method that starts the parsing
 	def parse(self):
@@ -43,7 +46,7 @@ class Parse(Connect):
 					for key in issues:
 						json_data = self.get_issue_detail(key)
 						print "Writing file for issue ", key
-						self.writeToFile(json_data, key)
+						self.file.write_to_file(json_data, key)
 				else:
 					print "No issues to be parsed"
 		else:
@@ -52,7 +55,7 @@ class Parse(Connect):
 			if issues is not None:
 				for key in issues:
 					request_data = self.get_issue_detail(key)
-					self.writeToFile(json_data, key)
+					self.file.write_to_file(json_data, key)
 
 		print "Parsing complete."
 
@@ -65,19 +68,9 @@ class Parse(Connect):
 		issues = self.jira.search_issues(self.get_query_string(), maxResults=subset, startAt=start)
 		return issues
 
-	#Write issue data to file with name as the issue id
-	def writeToFile(self, json_data, key):
-		target = open(self.get_file_name(key), 'w')
-		target.write(json.dumps(json_data, indent=4))
-		target.close()
-
 	#Gets issue details from
 	def get_issue_detail(self, key):
 		request_data = requests.get(self.get_rest_api_url(key), auth=(Connect.user, Connect.pwd))
 		json_data = json.loads(request_data.text)
 		return json_data
-
-	def get_file_name(self, key):
-		filename = self.dir + "/" + str(key)
-		return filename
 

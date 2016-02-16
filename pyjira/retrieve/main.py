@@ -3,6 +3,7 @@ __author__ = "Shiven"
 import argparse
 from connect import Connect
 from parse import Parse
+from file_manager import File
 
 class ArgParser(object):
 
@@ -18,7 +19,8 @@ class ArgParser(object):
 		parser.add_argument("-prj", "--project", help="Enter the jira project name")
 		parser.add_argument("-d", "--dir", help="Enter the directory where the issues need to be stored")
 		args = parser.parse_args()
-		if args.url and args.id and args.pwd and args.project:
+		if args.url and args.id and args.pwd and args.project and args.dir:
+			self.set_file_info(args.dir)
 			conn = self.set_conn_info(args.url, args.id, args.pwd)
 			jira = conn.connect()
 			print "Connected"
@@ -42,3 +44,6 @@ class ArgParser(object):
 		Connect.pwd = pwd
 		conn = Connect()
 		return conn
+
+	def set_file_info(self, dirname):
+		File.dirname = dirname

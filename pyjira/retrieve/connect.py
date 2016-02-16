@@ -14,5 +14,4 @@ class Connect(object):
 	def connect(self):
 		print "Connecting to a JIRA instance"
 		jira = JIRA(self.url, basic_auth=(self.user, self.pwd))
-		jira_url = self.url
 		return jira

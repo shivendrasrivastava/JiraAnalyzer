@@ -1,7 +1,7 @@
 #class used for parsing data from jira
 import json
 import requests
-from jira_connect import Connect
+from connect import Connect
 
 class Parse(Connect):
 
@@ -57,6 +57,8 @@ class Parse(Connect):
 		print "Parsing complete."
 
 	def get_rest_api_url(self, key):
+		if not Connect.url:
+			raise ValueError(" URL value is required ")
 		return Connect.url + "/rest/api/latest/issue/" + str(key)
 
 	def search(self, subset, start):
@@ -69,7 +71,7 @@ class Parse(Connect):
 		target.write(json.dumps(json_data, indent=4))
 		target.close()
 
-	#Gets issue details from 
+	#Gets issue details from
 	def get_issue_detail(self, key):
 		request_data = requests.get(self.get_rest_api_url(key), auth=(Connect.user, Connect.pwd))
 		json_data = json.loads(request_data.text)

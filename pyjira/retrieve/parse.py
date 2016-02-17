@@ -4,6 +4,7 @@ import json
 import requests
 from connect import Connect
 from file_manager import File
+from retrieve.loggerutil import simple_decorator
 
 class Parse(object):
 
@@ -15,6 +16,7 @@ class Parse(object):
 		self.file = File()
 
 	#Method that starts the parsing
+	@simple_decorator
 	def parse(self):
 		print "Parsing started...."
 		proj = self.jira.project(self.prj)
@@ -28,6 +30,7 @@ class Parse(object):
 		query_string = 'project='+self.prj
 		return query_string
 
+	@simple_decorator
 	def retrieve(self, total_no_of_issues):
 		issues = None
 		if total_no_of_issues > 1000:
@@ -36,8 +39,6 @@ class Parse(object):
 			no_of_issues = total_no_of_issues
 			print "Issues being queried are ", no_of_issues
 			while no_of_issues > 0:
-				print "Searching with ", no_of_issues
-				print "Starting at ", start
 				issues = self.search(subset, start)
 				start = start + subset
 				no_of_issues = no_of_issues - start
@@ -46,7 +47,7 @@ class Parse(object):
 					for key in issues:
 						json_data = self.get_issue_detail(key)
 						print "Writing file for issue ", key
-						self.file.write_to_file(json_data, key)
+						self.file.write_data_file(json_data, key)
 				else:
 					print "No issues to be parsed"
 		else:
@@ -55,14 +56,16 @@ class Parse(object):
 			if issues is not None:
 				for key in issues:
 					request_data = self.get_issue_detail(key)
-					self.file.write_to_file(json_data, key)
+					self.file.write_data_file(json_data, key)
 
 		print "Parsing complete."
+		self.file.write_status_file()
 
 	def get_rest_api_url(self, key):
 		if not Connect.url:
 			raise ValueError(" URL value is required ")
 		return Connect.url + "/rest/api/latest/issue/" + str(key)
+
 
 	def search(self, subset, start):
 		issues = self.jira.search_issues(self.get_query_string(), maxResults=subset, startAt=start)
@@ -73,4 +76,3 @@ class Parse(object):
 		request_data = requests.get(self.get_rest_api_url(key), auth=(Connect.user, Connect.pwd))
 		json_data = json.loads(request_data.text)
 		return json_data
-

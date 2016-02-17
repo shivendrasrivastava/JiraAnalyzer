@@ -1,6 +1,8 @@
 __author__ = 'Shiven'
 
 from jira import JIRA
+from retrieve.loggerutil import simple_decorator
+
 
 class Connect(object):
 
@@ -8,10 +10,10 @@ class Connect(object):
 	user = ""
 	pwd = ""
 
+	@simple_decorator
 	def __init__(self):
-		print "Initialized Connect Class"
+		print ""
 
-	def connect(self):
-		print "Connecting to a JIRA instance"
+	def connect_to_jira(self):
 		jira = JIRA(self.url, basic_auth=(self.user, self.pwd))
 		return jira

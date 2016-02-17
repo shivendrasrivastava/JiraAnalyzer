@@ -4,6 +4,8 @@ import argparse
 from connect import Connect
 from parse import Parse
 from file_manager import File
+from loggerutil import simple_decorator
+
 
 class ArgParser(object):
 
@@ -11,6 +13,7 @@ class ArgParser(object):
 		print "Initializing ArParser..."
 
 	#Parsing of arguments and calling connect and parse
+	@simple_decorator
 	def start(self):
 		parser = argparse.ArgumentParser()
 		parser.add_argument("-u", "--url",  help="Url for the jira instance")
@@ -22,7 +25,7 @@ class ArgParser(object):
 		if args.url and args.id and args.pwd and args.project and args.dir:
 			self.set_file_info(args.dir)
 			conn = self.set_conn_info(args.url, args.id, args.pwd)
-			jira = conn.connect()
+			jira = conn.connect_to_jira()
 			print "Connected"
 			if jira is not None:
 				parse = self.set_parser_info(jira, args.project, args.dir)

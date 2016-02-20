@@ -51,8 +51,8 @@ def simple_decorator(func):
 
 	def wrapper(*args, **kwargs):
 		'''Prints before and after'''
-		logger.debug("Entering %s.%s " % (args[0].__class__.__name__, func.__name__))
+		logger.info("Entering %s.%s " % (args[0].__class__.__name__, func.__name__))
 		func(*args, **kwargs)
-		logger.debug("Exiting %s.%s " % (args[0].__class__.__name__, func.__name__))
+		logger.info("Exiting %s.%s " % (args[0].__class__.__name__, func.__name__))
 
 	return wrapper

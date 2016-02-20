@@ -38,18 +38,23 @@ class Parse(object):
 	def retrieve(self, total_no_of_issues):
 		start = 0
 		count = 0
-		while count < total_no_of_issues:
-			issues = self.search(total_no_of_issues, start)
-			logger_parse.info("Iterating over results now")
-			if issues is not None:
-				for key in issues:
-					json_data = self.get_issue_detail(key)
-					self.file.write_data_file(json_data, key)
-					count += 1
-					start = count
-				self.file.write_status_file(self.prj, count, total_no_of_issues, "")
-			else:
-				logger_parse.info("No more issues to be parsed")
+		try:
+			while count < total_no_of_issues:
+				issues = self.search(total_no_of_issues, start)
+				logger_parse.info("Iterating over results now")
+				if issues is not None:
+					for key in issues:
+						json_data = self.get_issue_detail(key)
+						self.file.write_data_file(json_data, key)
+						count += 1
+						start = count
+					self.file.write_status_file(self.prj, count, total_no_of_issues, "")
+				else:
+					logger_parse.info("No more issues to be parsed")
+		except SSLError as err:
+			logger_parse.error("Encountered Exception while processing the issues. Writing error to the status file.")
+			self.file.write_status_file(self.prj, count, total_no_of_issues, err)
+
 		logger_parse.info("Parsing complete")
 
 	def get_rest_api_url(self, key):

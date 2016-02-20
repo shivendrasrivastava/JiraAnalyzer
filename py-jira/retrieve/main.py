@@ -11,7 +11,6 @@ from loggerutil import logger_main
 class ArgParser(object):
 
 	def __init__(self):
-		print "Initializing ArParser..."
 		logger_main.info(" Initializing ArgParser")
 
 	#Parsing of arguments and calling connect and parse

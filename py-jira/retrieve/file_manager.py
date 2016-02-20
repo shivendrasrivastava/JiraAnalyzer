@@ -31,8 +31,8 @@ class File(object):
 		target.write(json_data)
 		target.close()
 
-	def write_status_file(self, key, count, total):
-		print "Writing status file"
+	def write_status_file(self, key, count, total, error):
+		logger_file.info("Writing status file")
 		curr = datetime.datetime.now()
 		target = open(self.get_status_file_name(), 'w')
 		file_data = {}
@@ -40,6 +40,7 @@ class File(object):
 		file_data['project'] = str(key)
 		file_data['total_no_of_issues_parsed'] = str(count)
 		file_data['total_no_of_issues'] = str(total)
+		file_data['error'] = str(error)
 		target.write(json.dumps(file_data, indent=4))
 		target.close()
 

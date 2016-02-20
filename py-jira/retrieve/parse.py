@@ -47,10 +47,10 @@ class Parse(object):
 					self.file.write_data_file(json_data, key)
 					count += 1
 					start = count
+				self.file.write_status_file(self.prj, count, total_no_of_issues, "")
 			else:
 				logger_parse.info("No more issues to be parsed")
 		logger_parse.info("Parsing complete")
-		self.file.write_status_file(self.prj, count, total_no_of_issues)
 
 	def get_rest_api_url(self, key):
 		if not Connect.url:

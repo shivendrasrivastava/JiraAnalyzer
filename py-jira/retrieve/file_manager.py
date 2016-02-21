@@ -2,8 +2,7 @@ __author__ = "Shiven"
 
 import json
 import datetime
-from loggerutil import simple_decorator
-from loggerutil import logger_file
+from loggerutil import simple_decorator, logger_file
 import os
 
 class File(object):
@@ -47,3 +46,9 @@ class File(object):
 	def create_dir_if_not_exist(self, dirname):
 		if not os.path.isdir(dirname):
 			os.makedirs(dirname)
+
+	def read_status_json_if_exists(self, dirname)
+		if os.path.isdir(dirname):
+			with open('status.json') as data_file:
+				data = json.load(data_file)
+				return data

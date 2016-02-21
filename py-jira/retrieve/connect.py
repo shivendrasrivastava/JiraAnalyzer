@@ -1,9 +1,7 @@
 __author__ = 'Shiven'
 
 from jira import JIRA
-from loggerutil import simple_decorator
-from loggerutil import logger_connect
-
+from loggerutil import simple_decorator, logger_connect
 
 class Connect(object):
 

@@ -3,8 +3,7 @@ __author__ = "Shiven"
 import json
 from connect import Connect
 from file_manager import File
-from loggerutil import simple_decorator
-from loggerutil import logger_parse
+from loggerutil import simple_decorator, logger_parse
 from pool import ConnectionPoolManager
 
 class Parse(object):

@@ -49,6 +49,7 @@ class File(object):
 
 	def read_status_json_if_exists(self, dirname):
 		if os.path.isdir(dirname):
-			with open('status.json') as data_file:
-				data = json.load(data_file)
+			if os.path.isfile(dirname + "/status.json"):
+				with open(dirname + "/status.json") as data_file:
+					data = json.load(data_file)
 				return data

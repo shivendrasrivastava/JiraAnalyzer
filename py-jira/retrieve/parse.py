@@ -22,6 +22,10 @@ class Parse(object):
 	def parse(self):
 		logger_parse.info("Parsing started....")
 		self.file.create_dir_if_not_exist(self.dir)
+		status_data = self.file.read_status_json_if_exists(self.dir)
+		if not status_data is None:
+			issues_parsed = status_data['total_no_of_issues_parsed']
+			logger_parse.info("Issues parsed so far are :- %s", issues_parsed)
 		proj = self.jira.project(self.prj)
 		issues_info = self.jira.search_issues(self.get_query_string(), maxResults=0, fields=['total'], json_result=True)
 		logger_parse.info("Total no of issues are %s", str(issues_info['total']))

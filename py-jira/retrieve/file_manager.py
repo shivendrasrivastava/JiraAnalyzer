@@ -47,7 +47,7 @@ class File(object):
 		if not os.path.isdir(dirname):
 			os.makedirs(dirname)
 
-	def read_status_json_if_exists(self, dirname)
+	def read_status_json_if_exists(self, dirname):
 		if os.path.isdir(dirname):
 			with open('status.json') as data_file:
 				data = json.load(data_file)

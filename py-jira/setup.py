@@ -7,7 +7,7 @@ try:
 	import pypandoc
 	long_description = pypandoc.convert('JiraAnalyzer/README.md', 'rst')
 except(IOError, ImportError):
-	long_description = open('README.md').read()
+	long_description = "This is used to retrieve jira issues from the site and store it in mongodb"#open('README.md').read()
 
 with open('requirements.txt') as req_file:
 	requirements = req_file.read().splitlines()

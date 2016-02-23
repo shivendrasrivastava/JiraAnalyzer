@@ -23,6 +23,7 @@ class Parse(object):
 		logger_parse.info("Parsing started....")
 		self.file.create_dir_if_not_exist(self.dir)
 		status_data = self.file.read_status_json_if_exists(self.dir)
+		issues_parsed = 0
 		if not status_data is None:
 			issues_parsed = status_data['total_no_of_issues_parsed']
 			logger_parse.info("Issues parsed so far are :- %s", issues_parsed)
@@ -30,7 +31,7 @@ class Parse(object):
 		issues_info = self.jira.search_issues(self.get_query_string(), maxResults=0, fields=['total'], json_result=True)
 		logger_parse.info("Total no of issues are %s", str(issues_info['total']))
 		total_no_of_issues = issues_info['total']
-		self.retrieve(total_no_of_issues)
+		self.retrieve(total_no_of_issues, issues_parsed)
 
 	#Forms the query string for the parser.
 	def get_query_string(self):
@@ -38,9 +39,13 @@ class Parse(object):
 		return query_string
 
 	@simple_decorator
-	def retrieve(self, total_no_of_issues):
+	def retrieve(self, total_no_of_issues, already_parsed):
 		start = 0
 		count = 0
+		if already_parsed > 0:
+			logger_parse.info("Retrieving issues starting from %s", already_parsed)
+			start = already_parsed
+			count = already_parsed
 		try:
 			while count < total_no_of_issues:
 				issues = self.search(total_no_of_issues, start)

@@ -44,12 +44,14 @@ class Parse(object):
 		count = 0
 		if already_parsed > 0:
 			logger_parse.info("Retrieving issues starting from %s", already_parsed)
-			start = already_parsed
-			count = already_parsed
+			logger_parse.info("Total no of issues to be parsed are %s", total_no_of_issues)
+			start = int(already_parsed)
+			count = int(already_parsed)
+
 		try:
 			while count < total_no_of_issues:
 				issues = self.search(total_no_of_issues, start)
-				logger_parse.info("Iterating over results now")
+				logger_parse.info("Iterating over results now. Starting from %s", start)
 				if issues is not None:
 					for key in issues:
 						json_data = self.get_issue_detail(key)
